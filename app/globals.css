@@ -22,7 +22,3 @@
 svg {
   filter: url(#filter);
 }
-
-#zero svg {
-  filter: url(#filter2);
-}
