@@ -5,6 +5,8 @@ import { animate } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { menu_list } from "./constants";
 import { MenuListItem } from "./types";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export default function HomePage() {
   const [index, setIndex] = useState<number>(0);
@@ -44,60 +46,70 @@ export default function HomePage() {
   }, [index]);
 
   return (
-    <section className="min-h-screen flex justify-between items-center bg-rose-300">
-      <ul className="flex flex-col gap-5 ml-20">
-        {menu_list.map(({ label }: MenuListItem, i: number) => (
-          <li
-            onClick={() => setIndex(i)}
-            className={twMerge(
-              "text-9xl font-bold cursor-pointer hover:text-white transition-colors duration-500",
-              i === index && "!text-rose-500"
-            )}
-            key={label}
-          >
-            {label}
-          </li>
-        ))}
-      </ul>
+    <main>
+      <Navbar />
+      <section className="h-[50vh] bg-white" />
+      <section className="min-h-screen flex justify-between items-center bg-rose-300">
+        <ul className="flex flex-col gap-5 ml-20">
+          {menu_list.map(({ label }: MenuListItem, i: number) => (
+            <li
+              onClick={() => setIndex(i)}
+              className={twMerge(
+                "text-9xl font-bold cursor-pointer hover:text-white transition-colors duration-500",
+                i === index && "!text-rose-500"
+              )}
+              key={label}
+            >
+              {label}
+            </li>
+          ))}
+        </ul>
 
-      <svg className="w-[800px]" viewBox="0 0 256 256">
-        <defs>
-          <filter id="filter">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="20" result="blur" />
-            <feColorMatrix
-              in="blur"
-              mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -15"
-              result="filter"
-            />
-          </filter>
-        </defs>
+        <svg className="w-[800px]" viewBox="0 0 256 256">
+          <defs>
+            <filter id="filter">
+              <feGaussianBlur
+                in="SourceAlpha"
+                stdDeviation="20"
+                result="blur"
+              />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -15"
+                result="filter"
+              />
+            </filter>
+          </defs>
 
-        {menu_list.map((item: MenuListItem, i: number) => (
-          <path
-            key={item.label}
-            className="hidden"
-            ref={(ref: SVGPathElement | null) => {
-              paths.current[i] = ref;
-            }}
-            d={item.svg}
-          />
-        ))}
-
-        <g>
-          {[...Array(numberOfCircles)].map((_, i) => (
-            <circle
-              key={i}
-              r={radius}
-              cx={128}
-              cy={128}
-              ref={(ref: SVGCircleElement | null) => {
-                circles.current[i] = ref;
+          {menu_list.map((item: MenuListItem, i: number) => (
+            <path
+              key={item.label}
+              className="hidden"
+              ref={(ref: SVGPathElement | null) => {
+                paths.current[i] = ref;
               }}
+              d={item.svg}
             />
           ))}
-        </g>
-      </svg>
-    </section>
+
+          <g>
+            {[...Array(numberOfCircles)].map((_, i) => (
+              <circle
+                key={i}
+                r={radius}
+                cx={128}
+                cy={128}
+                ref={(ref: SVGCircleElement | null) => {
+                  circles.current[i] = ref;
+                }}
+              />
+            ))}
+          </g>
+        </svg>
+      </section>
+      <section className="h-[50vh] bg-white" />
+      <Footer />
+    </main>
   );
 }
